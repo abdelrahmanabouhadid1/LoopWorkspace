@@ -138,7 +138,8 @@ jobs:
         run: |
           DAY_OF_MONTH=$(date +%-d)
           WEEK_OF_MONTH=$(( ($(date +%-d) - 1) / 7 + 1 ))
-          if [[ $WEEK_OF_MONTH -eq 2 ]]; then
+          # Custom: build only in even months (Feb/Apr/Jun/Aug/Oct/Dec) = every ~2 months
+          if [[ $WEEK_OF_MONTH -eq 2 && $(( $(date +%-m) % 2 )) -eq 0 ]]; then
             echo "is_second_instance=true" >> "$GITHUB_OUTPUT"
           else
             echo "is_second_instance=false" >> "$GITHUB_OUTPUT"
